@@ -23,7 +23,7 @@ WHERE IDEvento = '0C7P3SFZHMYR'
 
 
 -- Exercício 1: Encontrar as 3 salas com maior capacidade.
-SELECT TOP 3 * FROM Sala
+SELECT * FROM Sala
 ORDER BY Capacidade DESC
 
 -- Exercício 2: Preciso controlar quem reservou cada sala, pois ele é responsável por deixar tudo no lugar ao sair. Encontre:
@@ -50,3 +50,24 @@ SELECT
 FROM Evento E
 INNER JOIN Sala S
 ON E.IDSala = S.IDSala
+
+-- Exercício 4: Quanto tempo(Minutos) cada sala foi ou será utilizada no total?
+
+SELECT 
+	S.Nome,
+	SUM(DATEDIFF(MINUTE, E.DtHrInicio, E.DtHrFim)) AS 'Minutos Totais'
+FROM Evento E
+INNER JOIN Sala S
+ON E.IDSala = S.IDSala
+GROUP BY S.Nome
+
+-- Alteração de dados é UPDATE e alteração de tabela se usa ALTER TABLE
+
+--************ JOINs ************
+--INNER JOIN - só puxa os nomes que tem foreign key
+--LEFT JOIN - puxa todo os dados da primeira tabela e só puxa o da direita se tiver foreign key
+--RIGHT JOIN - puxa todos da direita e só puxa da esquerda se tiver foreign key
+--FULL JOIN - puxa tudo de todas as tabelas
+
+--COUNT(): conta quantidades
+--GROUP BY: agrupa que tem HAVING
