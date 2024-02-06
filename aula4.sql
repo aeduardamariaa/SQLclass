@@ -22,7 +22,7 @@ INNER JOIN Sala S
 ON S.IDSala = E.IDSala
 INNER JOIN EventoPessoa EP
 ON E.IDEvento = EP.IDEvento
-GROUP BY S.Nome, E.Descricao, S.Capacidade
+GROUP BY S.Nome, E.Descricao, S.Capacidade, E.IDEvento
 
 --Encontre com sub-select, os eventos que iriam ter um limite ultrapassado, mas que não tiverasm 
 --por causa de algumas pessoas que faltaram no dia,
@@ -40,5 +40,5 @@ INNER JOIN Sala S
 ON S.IDSala = E.IDSala
 INNER JOIN EventoPessoa EP
 ON E.IDEvento = EP.IDEvento
-GROUP BY S.Nome, E.Descricao, S.Capacidade
+GROUP BY S.Nome, E.Descricao, S.Capacidade, E.IDEvento
 HAVING S.Capacidade < COUNT(EP.IDPessoa) AND S.Capacidade >= SUM(CASE WHEN EP.Presenca = 1 THEN 1 ELSE 0 END)
