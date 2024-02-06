@@ -42,3 +42,9 @@ INNER JOIN EventoPessoa EP
 ON E.IDEvento = EP.IDEvento
 GROUP BY S.Nome, E.Descricao, S.Capacidade, E.IDEvento
 HAVING S.Capacidade < COUNT(EP.IDPessoa) AND S.Capacidade >= SUM(CASE WHEN EP.Presenca = 1 THEN 1 ELSE 0 END)
+
+--SUB-SELECT e IN:
+SELECT * FROM Evento E
+INNER JOIN EventoEquipamento EQ
+ON E.IDEvento = EQ.IDEvento
+WHERE EQ.IDEquipamento IN (SELECT IDEquipamento FROM Equipamento WHERE Tipo IN ('Informática','Multimidia'))
