@@ -28,6 +28,8 @@ GROUP BY S.Nome, E.Descricao, S.Capacidade
 --por causa de algumas pessoas que faltaram no dia,
 --criei uma VIEW para esse select
 
+--*** GRPUP BY: precisa chamar os campos no group by ou colocar count no select SEMPRE!
+
 SELECT
 	S.Nome, 
 	E.Descricao,
