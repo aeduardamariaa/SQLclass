@@ -34,7 +34,8 @@ SELECT
 	S.Nome, 
 	E.Descricao,
 	S.Capacidade,
-	COUNT(EP.PapelEvento) AS 'Participantes'
+	COUNT(EP.PapelEvento) AS 'Convidados',
+	SUM(CASE WHEN EP.Presenca = 1 THEN 1 ELSE 0 END) AS 'Presentes'
 FROM Evento E
 INNER JOIN Sala S
 ON S.IDSala = E.IDSala
