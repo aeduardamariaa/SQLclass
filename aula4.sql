@@ -75,6 +75,39 @@ HAVING EP.Presenca = 1 AND S.Capacidade >= COUNT(EP.IDEventoPessoa) AND E.IDEven
 	GROUP BY E.IDEvento, S.Capacidade
 	HAVING COUNT(EP.IDEventoPessoa) > S.Capacidade)
 
+-- OUTRO MODO DE RESOLVER
+-- 5.7 -- Seleciona os eventos que, caso todos os convidados fossem, a capacidade excediria, porém feito com IN
+SELECT 
+	E.Descricao AS 'Descrição do evento',
+	S.Nome AS 'Nome da sala',
+	S.Capacidade AS 'Capacidade da sala',
+	COUNT(EP.IDPessoa) AS 'Convidados',
+	(
+		SELECT 
+			COUNT(EP2.IDPessoa)
+		FROM Evento AS E2
+			INNER JOIN Sala AS S2 ON E2.IDSala = S2.IDSala
+			INNER JOIN EventoPessoa AS EP2 ON E2.IDEvento = EP2.IDEvento
+		WHERE EP2.Presenca = 1 AND E2.IDEvento = E.IDEvento
+		GROUP BY E2.IDEvento, S2.Capacidade
+		HAVING COUNT(EP2.IDPessoa) <= S2.Capacidade
+	) AS 'Pessoas presentes'
+FROM Evento AS E
+	INNER JOIN Sala AS S ON E.IDSala = S.IDSala
+	INNER JOIN EventoPessoa AS EP ON E.IDEvento = EP.IDEvento
+GROUP BY E.Descricao, S.Capacidade, S.Nome, E.IDEvento
+HAVING COUNT(EP.IDPessoa) > S.Capacidade AND 
+		E.IDEvento IN (
+		SELECT
+			E2.IDEvento
+		FROM Evento E2
+			INNER JOIN Sala AS S2 ON E2.IDSala = S2.IDSala
+			INNER JOIN EventoPessoa AS EP2 ON E2.IDEvento = EP2.IDEvento
+		WHERE EP2.Presenca = 1
+		GROUP BY E2.IDEvento, S2.Capacidade
+		HAVING COUNT(EP2.IDPessoa) <= S2.Capacidade
+	)
+
 --SUB-SELECT e IN:
 SELECT * FROM Evento E
 INNER JOIN EventoEquipamento EQ
