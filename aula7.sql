@@ -1,0 +1,3 @@
+--TRANSATION
+--TRIGGER: inserção, exclusão, atualizar.
+---for(jundo à ação), after(após), instead of (no lugar)
