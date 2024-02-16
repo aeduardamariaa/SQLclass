@@ -104,3 +104,23 @@ ALTER TABLE PAIS ADD PerCapita FLOAT
 
 UPDATE PAIS
 SET PerCapita = ROUND(PIB / Populacao,3)
+
+-- Exercício 9: Liste as Cidades, Países, População e uma coluna chamada “Situação População” com dados como: “Acima da média” 
+-- e “Abaixo ou igual à média”.
+
+SELECT 
+	C.Cidade,
+	P.Pais,
+	C.Populacao,
+	CASE
+		WHEN (((SELECT SUM (Populacao)from CIDADE)/(SELECT COUNT(Populacao)from CIDADE)) < C.Populacao) THEN 'Acima da média'
+		ELSE 'Abaixo ou igual a média'
+	END AS 'Situação População'
+FROM PAIS P
+INNER JOIN CIDADE C
+ON P.Pais = C.Pais
+GROUP BY C.Cidade,
+	P.Pais,
+	C.Populacao
+
+-- FIZ A MÉDIA DA POPULAÇÃO DA CIDADE, NÃO DO PAÍS, POIS NÃO FICOU CLARO QUAL DAS POPULAÇÕES
