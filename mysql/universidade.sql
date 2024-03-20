@@ -65,7 +65,7 @@ INSERT INTO turma (id_turma, ano, horario, id_disc, id_prof) VALUES
 (100, 2021, '13:30 às 17:30', 1, 1111);
 
 INSERT INTO historico (id_turma, id_disc, id_prof, matricula, frequencia, nota) VALUES
-(100, 1, 1111, 20220101, 10, 9.8);
+(100, 1, 1111, 20220101, 10, 9.8)
 
 
 
